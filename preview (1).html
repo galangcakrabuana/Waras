@@ -462,7 +462,7 @@
     </main>
 
     <!-- Results Page (Preserved and styled like cek.html) -->
-    <main class="page flex-grow flex flex-col w-full px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto py-xl space-y-xl" id="results-page">
+    <main class="page flex-grow flex flex-col w-full px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto py-8 md:py-16 space-y-8 md:space-y-16" id="results-page">
         <!-- Back Button -->
         <div class="flex justify-start">
             <button class="flex items-center text-primary dark:text-primary-fixed hover:text-primary/80 transition-colors font-label-md text-label-md uppercase tracking-wider focus:outline-none" data-view="home">
@@ -516,7 +516,7 @@
         </section>
 
         <!-- 4. Product Profile Table -->
-        <section class="border-t border-surface-container-highest pt-xl">
+        <section class="border-t border-surface-container-highest pt-8 md:pt-16">
             <h2
                 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-lg">
                 Profil Produk Resmi BPOM</h2>
@@ -610,7 +610,7 @@
         </section>
 
         <!-- 9. Potential Side Effects -->
-        <section class="border-t border-surface-container-highest pt-xl">
+        <section class="border-t border-surface-container-highest pt-8 md:pt-16">
             <h2
                 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-lg">
                 Potensi Efek Samping (Data OpenFDA)</h2>
@@ -626,17 +626,20 @@
         </section>
 
         <!-- 10. Recommendations & Tactical Guidance -->
-        <section class="bg-primary-container rounded-2xl p-xl text-center space-y-md mt-xl">
+        <section class="bg-primary-container rounded-2xl p-6 md:p-12 text-center space-y-4 md:space-y-6 mt-8 md:mt-16">
             <h2 class="font-headline-md text-headline-md text-on-primary-container">Rekomendasi Ahli &amp; Panduan Konsumen</h2>
             <p id="verdict-recommendation" class="font-body-lg text-body-lg text-on-primary-container max-w-2xl mx-auto">
                 -
             </p>
-            <div class="bg-surface/50 rounded-xl p-md mt-sm max-w-2xl mx-auto text-left">
+            <div class="bg-surface/50 rounded-xl p-6 mt-4 max-w-2xl mx-auto text-left">
                 <h3 class="font-label-md text-label-md text-on-primary-container font-bold mb-2">Tips Penggunaan &amp; Keamanan:</h3>
-                <p id="overall-disclaimer" class="font-body-md text-body-md text-on-primary-container leading-relaxed">
-                    -
-                </p>
+                <ul id="result-safety-tips" class="list-disc pl-5 font-body-md text-body-md text-on-primary-container space-y-1">
+                    <!-- Populated via JS -->
+                </ul>
             </div>
+            <p id="overall-disclaimer" class="font-caption text-xs text-on-primary-container/85 max-w-2xl mx-auto mt-4 leading-relaxed italic">
+                -
+            </p>
             <button onclick="window.print()" class="mt-sm font-label-md text-label-md bg-primary text-on-primary px-8 py-3 rounded-full hover:opacity-90 transition-opacity">
                 Cetak Laporan Lengkap
             </button>

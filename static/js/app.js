@@ -683,8 +683,46 @@ function displayResults(result) {
     else recC.innerText = "Sangat Berisiko! Iklan produk ini menggunakan klaim medis berlebihan (Overclaim Tinggi) untuk penyakit berat, atau produk tidak terdaftar dengan tingkat laporan kejadian berbahaya yang sangat tinggi. Sangat direkomendasikan untuk menghindari produk ini.";
   }
 
+  // Dynamic Safety Tips based on Category
+  const tipsList = document.getElementById('result-safety-tips');
+  if (tipsList) {
+    tipsList.innerHTML = '';
+    const category = (profile ? profile.product_category : "") || "";
+    const catLower = category.toLowerCase();
+    
+    let tips = [];
+    if (catLower.includes("kosmetik") || catLower.includes("cosmetic") || catLower.includes("skin") || catLower.includes("wajah") || catLower.includes("kecantikan")) {
+      tips = [
+        "Lakukan patch test (uji tempel) di kulit belakang telinga atau lengan bagian dalam selama 24 jam sebelum pemakaian pertama.",
+        "Gunakan tabir surya (sunscreen) minimal SPF 30 di pagi/siang hari, terutama jika produk mengandung zat eksfoliasi aktif.",
+        "Hentikan penggunaan segera jika timbul sensasi terbakar, gatal ekstrem, bengkak, atau kemerahan luar biasa."
+      ];
+    } else if (catLower.includes("suplemen") || catLower.includes("supplement") || catLower.includes("traditional") || catLower.includes("jamu") || catLower.includes("herbal")) {
+      tips = [
+        "Konsumsi setelah makan untuk menghindari potensi iritasi lambung, kecuali jika terdapat petunjuk khusus pada kemasan.",
+        "Patuhi dosis harian yang dianjurkan resmi. Jangan mengonsumsi berlebihan hanya untuk mempercepat efek khasiat.",
+        "Konsultasikan dengan dokter jika Anda sedang hamil, menyusui, atau memiliki penyakit penyerta sebelum mengonsumsi."
+      ];
+    } else {
+      // Obat / General medicine
+      tips = [
+        "Pahami aturan pakai, dosis standar, efek samping, dan kontraindikasi obat yang tertera pada brosur kemasan resmi.",
+        "Jangan meminum obat ini bersamaan dengan alkohol atau obat sejenis lainnya tanpa petunjuk dokter untuk mencegah efek toksik.",
+        "Simpan obat di tempat kering, sejuk (di bawah suhu 30°C), terhindar dari cahaya langsung, dan jauhkan dari anak-anak."
+      ];
+    }
+
+    tips.forEach(tip => {
+      const li = document.createElement('li');
+      li.innerText = tip;
+      tipsList.appendChild(li);
+    });
+  }
+
   const overallDiscEl = document.getElementById('overall-disclaimer');
-  if (overallDiscEl) overallDiscEl.innerText = result.disclaimer || "WARAS-ID adalah platform analisis keselamatan konsumen bertenaga AI. Seluruh analisis bersifat informatif dan tidak menggantikan nasihat medis profesional.";
+  if (overallDiscEl) {
+    overallDiscEl.innerText = result.disclaimer || "WARAS-ID adalah platform analisis keselamatan konsumen bertenaga AI. Seluruh analisis bersifat informatif dan tidak menggantikan nasihat medis profesional.";
+  }
 
   // Technical Details (Accordion fields)
   const aiSummaryEl = document.getElementById('result-ai-summary');
