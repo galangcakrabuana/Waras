@@ -184,3 +184,19 @@ temp_ocr_*
 # Local deployment and setup scripts
 setup_vps.sh
 vps_git_pull.py
+
+# Ignore all markdown files
+*.md
+
+# Ignore all shell scripts
+*.sh
+
+# Ignore helper Python scripts
+convert_to_sqlite.py
+inspect_excel.py
+shopee_stealth_fetcher.py
+
+# Ignore unused/temporary HTML files
+cek.html
+rujukaninput.html
+shopee_page.html
