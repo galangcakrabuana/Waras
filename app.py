@@ -67,6 +67,21 @@ def predict_text(text):
     if model is None or tokenizer is None:
         return None
     try:
+        # Heuristic: If text is very short (less than 4 words), it is a product name/noun, not a claim.
+        # Bypass the BERT model to avoid false positives.
+        words = (text or "").strip().split()
+        if len(words) < 4:
+            default_label = labels[0]
+            for lbl in labels:
+                if "tidak" in lbl.lower() or "normal" in lbl.lower() or "safe" in lbl.lower():
+                    default_label = lbl
+                    break
+            return {
+                "label": default_label,
+                "confidence": 1.0,
+                "probabilities": {lbl: (1.0 if lbl == default_label else 0.0) for lbl in labels}
+            }
+
         import torch
         inputs = tokenizer(text, return_tensors="pt", truncation=True, max_length=512)
         with torch.no_grad():
