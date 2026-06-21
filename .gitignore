@@ -180,3 +180,7 @@ temp_ocr_*
 # Agent and Gemini framework files
 .agents/
 .codex/
+
+# Local deployment and setup scripts
+setup_vps.sh
+vps_git_pull.py
