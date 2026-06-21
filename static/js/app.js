@@ -1,5 +1,5 @@
-const API_URL = 'http://localhost:5000/api/check';
-const IDENTITY_API_URL = 'http://localhost:5000/api/products/identity-check';
+const API_URL = `${window.location.origin}/api/check`;
+const IDENTITY_API_URL = `${window.location.origin}/api/products/identity-check`;
 
 let selectedFiles = { barcode: null, screenshot: null };
 let currentAnalysisMethod = 'text';
