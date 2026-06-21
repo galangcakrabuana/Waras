@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="description" content="WARAS.ID — Pemeriksa klaim produk kesehatan. Cek link, foto barcode, gambar iklan, atau teks klaim untuk membantu menemukan informasi penting sebelum membeli produk." />
+    <title>WARAS.ID - Cek Keamanan Produk Kesehatan</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400&amp;family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-surface-variant": "#3e4949",
+                        "on-primary": "#ffffff",
+                        "surface": "#f2fbfa",
+                        "on-tertiary-fixed": "#070e5c",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#293232",
+                        "inverse-primary": "#75d6d7",
+                        "tertiary-fixed-dim": "#bec2ff",
+                        "on-surface": "#151d1d",
+                        "on-primary-fixed-variant": "#004f50",
+                        "surface-container-highest": "#dbe4e4",
+                        "secondary-fixed-dim": "#b5c6f2",
+                        "secondary": "#4d5e85",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#5158a2",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "secondary-container": "#c0d1fe",
+                        "on-secondary-container": "#485980",
+                        "surface-container-low": "#ecf5f5",
+                        "surface-tint": "#00696b",
+                        "on-secondary-fixed-variant": "#35466b",
+                        "tertiary-container": "#a0a7f8",
+                        "surface-dim": "#d3dcdb",
+                        "on-primary-container": "#00494a",
+                        "surface-container-high": "#e1eae9",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed": "#92f2f3",
+                        "surface-variant": "#dbe4e4",
+                        "on-error-container": "#93000a",
+                        "primary": "#00696b",
+                        "on-secondary-fixed": "#061a3d",
+                        "on-tertiary-fixed-variant": "#383f88",
+                        "background": "#f2fbfa",
+                        "inverse-on-surface": "#e9f3f2",
+                        "on-tertiary-container": "#333982",
+                        "outline": "#6e7979",
+                        "on-primary-fixed": "#002020",
+                        "surface-container": "#e6f0ef",
+                        "secondary-fixed": "#d9e2ff",
+                        "primary-fixed-dim": "#75d6d7",
+                        "surface-bright": "#f2fbfa",
+                        "tertiary-fixed": "#e0e0ff",
+                        "primary-container": "#5abcbd",
+                        "outline-variant": "#bdc9c8",
+                        "on-background": "#151d1d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                        "organic": "30% 70% 70% 30% / 30% 30% 70% 70%"
+                    },
+                    "spacing": {
+                        "lg": "4rem",
+                        "unit": "4px",
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "md": "2rem",
+                        "xs": "0.5rem",
+                        "margin-desktop": "10%",
+                        "sm": "1rem",
+                        "xl": "8rem"
+                    },
+                    "fontFamily": {
+                        "headline-xl": ["Newsreader", "serif"],
+                        "body-md": ["Hanken Grotesk", "sans-serif"],
+                        "caption": ["Hanken Grotesk", "sans-serif"],
+                        "headline-lg": ["Newsreader", "serif"],
+                        "headline-xl-mobile": ["Newsreader", "serif"],
+                        "body-lg": ["Hanken Grotesk", "sans-serif"],
+                        "headline-md": ["Newsreader", "serif"],
+                        "label-md": ["Hanken Grotesk", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-xl": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.03em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "headline-lg": ["40px", { "lineHeight": "1.2", "fontWeight": "500" }],
+                        "headline-xl-mobile": ["42px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-lg": ["20px", { "lineHeight": "1.7", "fontWeight": "400" }],
+                        "headline-md": ["28px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="static/css/styles.css" />
+    <style>
+        body {
+            background-color: #f2fbfa !important;
+            color: #151d1d !important;
+            -webkit-font-smoothing: antialiased;
+            font-family: 'Hanken Grotesk', sans-serif !important;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .organic-input-zone {
+            border-radius: 40px;
+            background: linear-gradient(145deg, #ffffff, #ecf5f5);
+            box-shadow: 0 10px 40px -10px rgba(0, 105, 107, 0.08), inset 0 2px 10px rgba(255, 255, 255, 0.8);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .organic-input-zone:focus-within {
+            box-shadow: 0 15px 50px -10px rgba(0, 105, 107, 0.15), inset 0 2px 10px rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+            border-color: #5abcbd;
+        }
+
+        .input-ghost {
+            background: transparent !important;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+        }
+
+        .input-ghost:focus {
+            box-shadow: none !important;
+            border: none !important;
+            outline: none !important;
+        }
+
+        /* Smooth fade in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        /* Scoped overrides to prevent styles.css pollution on home-page */
+        nav.waras-nav {
+            height: auto !important;
+            padding: 16px 20px !important;
+            border-bottom: 1px solid rgba(189,201,200,0.2) !important;
+            background: rgba(242,251,250,0.85) !important;
+            backdrop-filter: blur(12px) !important;
+            -webkit-backdrop-filter: blur(12px) !important;
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 50 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+        }
+        @media (min-width: 768px) {
+            nav.waras-nav {
+                padding-left: 10% !important;
+                padding-right: 10% !important;
+            }
+        }
+
+        #home-page h1 {
+            font-family: 'Newsreader', serif !important;
+            font-size: 42px !important;
+            line-height: 1.2 !important;
+            letter-spacing: -0.02em !important;
+            font-weight: 600 !important;
+            margin-bottom: 8px !important;
+        }
+        @media (min-width: 768px) {
+            #home-page h1 {
+                font-size: 64px !important;
+                line-height: 1.1 !important;
+                letter-spacing: -0.03em !important;
+            }
+        }
+
+        /* Loader and layout switching classes */
+        .page { display: none; }
+        .page.active { display: block; }
+        .loading-overlay { background: rgba(242,251,250,0.92) !important; }
+        .spinner { border-top-color: #00696b !important; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Identity result customized styling */
+        .identity-result table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+        .identity-result td {
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(189, 201, 200, 0.2);
+        }
+        .identity-result td:first-child {
+            font-weight: 600;
+            color: #3e4949;
+            width: 35%;
+        }
+        .identity-status {
+            font-weight: 700;
+            font-size: 16px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            display: inline-block;
+        }
+        .identity-status.is-found { background-color: #e7f4ef; color: #168464; }
+        .identity-status.is-partial { background-color: #f7edda; color: #9a5b00; }
+        .identity-status.is-not-found { background-color: #fae9e7; color: #b3261e; }
+        .identity-match-status {
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .identity-match-status.match-full { background-color: #e7f4ef; color: #168464; }
+        .identity-match-status.match-partial { background-color: #f7edda; color: #9a5b00; }
+        
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 4em;
+            line-height: 0.8;
+            padding-right: 0.1em;
+            padding-top: 0.1em;
+            color: #00696b;
+            font-family: 'Newsreader', serif;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col font-body-md text-body-md overflow-x-hidden relative">
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" role="status" aria-live="polite" aria-hidden="true" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:18px;">
+        <div class="spinner" style="width:44px;height:44px;border:4px solid #dbe4e4;border-top:4px solid #00696b;border-radius:50%;animation:spin 1s linear infinite;"></div>
+        <div id="loading-text" style="font-weight:600;font-size:16px;color:#151d1d;">Sedang memeriksa produk...</div>
+    </div>
+
+    <!-- Top Navigation -->
+    <nav class="waras-nav">
+        <a class="font-headline-md text-headline-md font-bold tracking-tight text-primary" href="#" data-view="home">WARAS.ID</a>
+        <div class="hidden md:flex space-x-gutter items-center">
+            <a class="text-primary font-bold border-b-2 border-primary pb-1 font-label-md text-label-md uppercase" href="#" data-view="home">Cek Keamanan</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md uppercase" href="#how-it-works">Cara Kerja</a>
+            <a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md uppercase" href="#what-we-check">Metodologi</a>
+        </div>
+        <div class="flex items-center space-x-md">
+            <button class="hidden md:block text-primary font-label-md text-label-md uppercase hover:text-primary/80 transition-colors">Sign In</button>
+            <button id="btn-open-mobile-menu" class="md:hidden text-primary">
+                <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">menu</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="fixed inset-0 bg-background/95 backdrop-blur-md z-45 transform translate-x-full transition-transform duration-300 md:hidden flex flex-col pt-24 px-8 space-y-6">
+        <button id="btn-close-mobile-menu" class="absolute top-4 right-4 text-primary focus:outline-none">
+            <span class="material-symbols-outlined text-3xl">close</span>
+        </button>
+        <a class="text-primary font-bold text-xl uppercase tracking-wider border-b border-outline-variant/20 pb-2" href="#" data-view="home">Cek Keamanan</a>
+        <a class="text-on-surface-variant hover:text-primary text-xl uppercase tracking-wider border-b border-outline-variant/20 pb-2" href="#how-it-works">Cara Kerja</a>
+        <a class="text-on-surface-variant hover:text-primary text-xl uppercase tracking-wider border-b border-outline-variant/20 pb-2" href="#what-we-check">Metodologi</a>
+        <button class="text-left text-primary text-xl uppercase tracking-wider font-bold pt-4">Sign In</button>
+    </div>
+
+    <!-- Main Content (Home / Input Page) -->
+    <main class="page active" id="home-page">
+        <div class="flex-grow flex flex-col items-center justify-start pt-xl pb-xl px-margin-mobile md:px-margin-desktop w-full max-w-[1440px] mx-auto relative z-10">
+            <!-- Ambient Background Accents -->
+            <div class="absolute top-0 left-10 w-96 h-96 bg-primary-container/20 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
+            <div class="absolute top-40 right-20 w-[500px] h-[500px] bg-secondary-container/20 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
+            
+            <!-- Hero Section -->
+            <header class="text-center w-full max-w-4xl mx-auto mb-lg animate-fade-in">
+                <h1 class="text-on-surface mb-sm mx-auto">
+                    Verifikasi BPOM & Deteksi Overclaim<br><span class="text-primary italic font-normal">Produk Kesehatan Anda.</span>
+                </h1>
+                <p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed">
+                    Platform analisis bertenaga AI untuk membantu memverifikasi keabsahan registrasi BPOM, mengidentifikasi keaslian produk, serta mendeteksi klaim promosi yang berlebihan (overclaim) secara cepat dan transparan.
+                </p>
+            </header>
+            
+            <!-- Smart Entry Area -->
+            <section class="w-full max-w-3xl mx-auto mb-xl relative z-20 animate-fade-in" style="animation-delay: 0.2s;">
+                <!-- Input Zone -->
+                <div class="organic-input-zone p-6 md:p-8 flex flex-col relative border border-outline-variant/30">
+                    <div class="flex items-center w-full mb-4">
+                        <span class="material-symbols-outlined text-primary text-3xl mr-4" style="font-variation-settings: 'FILL' 0;">search</span>
+                        <input id="input-main-val"
+                            class="input-ghost w-full font-body-lg text-body-lg text-on-surface placeholder:text-on-surface-variant/50"
+                            placeholder="Tempel tautan produk, nama klinik, atau komposisi bahan..." type="text">
+                    </div>
+                    <!-- Input Actions/Cues -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-4 pt-4 border-t border-outline-variant/20">
+                        <div class="flex flex-wrap gap-x-6 gap-y-3 justify-start">
+                            <button id="btn-action-link"
+                                class="flex items-center text-on-surface-variant hover:text-primary transition-colors group">
+                                <span class="material-symbols-outlined text-xl mr-2 group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 0;">link</span>
+                                <span class="font-label-md text-label-md uppercase tracking-wider text-xs">Tautan</span>
+                            </button>
+                            <button id="btn-action-barcode"
+                                class="flex items-center text-on-surface-variant hover:text-primary transition-colors group">
+                                <span class="material-symbols-outlined text-xl mr-2 group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 0;">barcode_scanner</span>
+                                <span class="font-label-md text-label-md uppercase tracking-wider text-xs">Barcode</span>
+                            </button>
+                            <button id="btn-action-image"
+                                class="flex items-center text-on-surface-variant hover:text-primary transition-colors group">
+                                <span class="material-symbols-outlined text-xl mr-2 group-hover:scale-110 transition-transform" style="font-variation-settings: 'FILL' 0;">image</span>
+                                <span class="font-label-md text-label-md uppercase tracking-wider text-xs">Gambar</span>
+                            </button>
+                        </div>
+                        <button id="btn-main-analyze"
+                            class="w-full sm:w-auto bg-primary text-on-primary px-6 py-3 rounded-full font-label-md text-label-md uppercase tracking-wider hover:bg-primary/90 transition-colors flex items-center justify-center shadow-lg shadow-primary/20">
+                            Analisis
+                            <span class="material-symbols-outlined ml-2 text-sm" style="font-variation-settings: 'FILL' 1;">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="mt-4 text-center">
+                    <span class="font-caption text-caption text-on-surface-variant/70">Didukung oleh database laboratorium independen &amp; laporan BPOM.</span>
+                </div>
+
+                <!-- Hidden file inputs -->
+                <input type="file" id="input-barcode-file" accept="image/*" style="display:none;" />
+                <input type="file" id="input-screenshot-file" accept="image/*" style="display:none;" />
+
+                <!-- Status and Identity card overlay -->
+                <div class="status-message mt-4 text-center text-sm" id="status-main" aria-live="polite"></div>
+
+                <!-- Identity Result Card (displayed inline on home page) -->
+                <div class="identity-result mt-6 p-6 border border-outline-variant/30 rounded-2xl bg-surface-container-low" id="identity-result" hidden>
+                    <div id="identity-result-header"></div>
+                    <div id="identity-result-body" class="mt-4"></div>
+                    <div id="identity-result-footer" class="mt-4 pt-4 border-t border-outline-variant/20"></div>
+                </div>
+            </section>
+
+            <!-- Section 1: Cara Kerja -->
+            <section id="how-it-works" class="w-full max-w-4xl mx-auto mt-20 pt-12 border-t border-outline-variant/20 animate-fade-in" style="animation-delay: 0.3s;">
+                <div class="text-center mb-10">
+                    <span class="font-label-md text-label-md text-primary uppercase tracking-wider">Panduan</span>
+                    <h2 class="font-headline-md text-headline-md text-on-surface mt-2" style="font-family: 'Newsreader', serif; font-size: 28px; font-weight: 600;">Cara Kerja WARAS.ID</h2>
+                    <p class="font-body-md text-body-md text-on-surface-variant max-w-xl mx-auto mt-2">
+                        Pemeriksaan dilakukan dalam tiga langkah sederhana untuk mendapatkan hasil analisis medis yang komprehensif.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="flex flex-col items-center text-center p-4">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold mb-4 text-xl">1</div>
+                        <h3 class="font-headline-md text-lg text-on-surface mb-2 font-semibold">Pilih Sumber</h3>
+                        <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+                            Masukkan link produk marketplace, foto barcode, gambar screenshot promosi, atau ketik kalimat klaim langsung.
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center text-center p-4">
+                        <div class="w-12 h-12 rounded-full bg-secondary-container/35 flex items-center justify-center text-on-secondary-container font-bold mb-4 text-xl">2</div>
+                        <h3 class="font-headline-md text-lg text-on-surface mb-2 font-semibold">Analisis Sistem</h3>
+                        <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+                            AI memverifikasi status BPOM, mendeteksi potensi overclaim dengan NLP IndoBERT, dan menghitung kecocokan konsistensi medis.
+                        </p>
+                    </div>
+                    <div class="flex flex-col items-center text-center p-4">
+                        <div class="w-12 h-12 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed-variant font-bold mb-4 text-xl">3</div>
+                        <h3 class="font-headline-md text-lg text-on-surface mb-2 font-semibold">Baca Laporan</h3>
+                        <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+                            Dapatkan skor keamanan, detail zat aktif dari OpenFDA, serta rekomendasi tindakan praktis untuk kesehatan Anda.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Parameter Pemeriksaan -->
+            <section id="what-we-check" class="w-full max-w-4xl mx-auto mt-20 pt-12 border-t border-outline-variant/20 animate-fade-in" style="animation-delay: 0.4s;">
+                <div class="text-center mb-10">
+                    <span class="font-label-md text-label-md text-primary uppercase tracking-wider">Parameter</span>
+                    <h2 class="font-headline-md text-headline-md text-on-surface mt-2" style="font-family: 'Newsreader', serif; font-size: 28px; font-weight: 600;">Metodologi Pemeriksaan</h2>
+                    <p class="font-body-md text-body-md text-on-surface-variant max-w-xl mx-auto mt-2">
+                        Kami menggabungkan data registrasi resmi dengan model kecerdasan buatan untuk menilai keamanan produk secara menyeluruh.
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="p-6 rounded-2xl border border-outline-variant/25 bg-surface-container-low flex gap-4">
+                        <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">verified</span>
+                        <div>
+                            <h3 class="font-headline-md text-base text-on-surface font-semibold mb-1">Verifikasi Registrasi BPOM</h3>
+                            <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+                                Memverifikasi kecocokan nomor registrasi BPOM produk di database resmi untuk menghindari produk ilegal.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-6 rounded-2xl border border-outline-variant/25 bg-surface-container-low flex gap-4">
+                        <span class="material-symbols-outlined text-tertiary text-3xl" style="font-variation-settings: 'FILL' 1;">psychology</span>
+                        <div>
+                            <h3 class="font-headline-md text-base text-on-surface font-semibold mb-1">Analisis Overclaim AI</h3>
+                            <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+                                Model NLP IndoBERT mendeteksi penggunaan kata-kata promosi hiperbolis atau janji kesembuhan yang tidak realistis.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-6 rounded-2xl border border-outline-variant/25 bg-surface-container-low flex gap-4">
+                        <span class="material-symbols-outlined text-secondary text-3xl" style="font-variation-settings: 'FILL' 1;">healing</span>
+                        <div>
+                            <h3 class="font-headline-md text-base text-on-surface font-semibold mb-1">Konsistensi Medis</h3>
+                            <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+                                Mencocokkan klaim manfaat iklan dengan fungsi farmakologis resmi zat aktif produk berdasarkan klasifikasi terapi.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-6 rounded-2xl border border-outline-variant/25 bg-surface-container-low flex gap-4">
+                        <span class="material-symbols-outlined text-outline text-3xl" style="font-variation-settings: 'FILL' 1;">monitoring</span>
+                        <div>
+                            <h3 class="font-headline-md text-base text-on-surface font-semibold mb-1">Laporan Efek Samping</h3>
+                            <p class="font-body-md text-sm text-on-surface-variant leading-relaxed">
+                                Menyediakan referensi keamanan global dari OpenFDA terkait frekuensi dan jenis efek samping zat aktif.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Disclaimer Section -->
+            <section class="w-full max-w-3xl mx-auto mt-20 p-6 rounded-2xl bg-surface-container-high/40 border border-outline-variant/10 text-center animate-fade-in" style="animation-delay: 0.5s;">
+                <span class="material-symbols-outlined text-outline-variant text-2xl mb-2">info</span>
+                <p class="font-caption text-xs text-on-surface-variant/80 max-w-2xl mx-auto leading-relaxed">
+                    <strong>Disclaimer:</strong> WARAS.ID membantu melakukan pemeriksaan awal secara digital. Hasil analisis platform ini bersifat edukatif dan referensial, bukan pengganti diagnosis medis resmi, konsultasi dokter, apoteker, atau keputusan otoritas kesehatan.
+                </p>
+            </section>
+        </div>
+    </main>
+
+    <!-- Results Page (Preserved and styled like cek.html) -->
+    <main class="page flex-grow flex flex-col w-full px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto py-xl space-y-xl" id="results-page">
+        <!-- Back Button -->
+        <div class="flex justify-start">
+            <button class="flex items-center text-primary dark:text-primary-fixed hover:text-primary/80 transition-colors font-label-md text-label-md uppercase tracking-wider focus:outline-none" data-view="home">
+                <span class="material-symbols-outlined mr-2">arrow_back</span>
+                Kembali ke pilihan input
+            </button>
+        </div>
+
+        <!-- 1. Top Section: Final Verdict & Safety Meter -->
+        <section class="flex flex-col items-center justify-center text-center space-y-md">
+            <div class="relative w-64 h-32 overflow-hidden">
+                <!-- Simple Arc SVG representation for Safety Meter -->
+                <svg class="w-full h-full transform origin-bottom" viewBox="0 0 100 50">
+                    <path class="text-surface-container-high" d="M 10 50 A 40 40 0 0 1 90 50" fill="none"
+                        stroke="currentColor" stroke-linecap="round" stroke-width="8"></path>
+                    <path id="safety-meter-fill" class="text-primary" d="M 10 50 A 40 40 0 0 1 70 20" fill="none" stroke="currentColor"
+                        stroke-linecap="round" stroke-width="8"></path>
+                    <!-- Needle -->
+                    <line id="safety-meter-needle" class="text-on-surface" stroke="currentColor" stroke-linecap="round" stroke-width="3" x1="50"
+                        x2="70" y1="50" y2="20"></line>
+                    <circle class="text-on-surface" cx="50" cy="50" fill="currentColor" r="4"></circle>
+                </svg>
+            </div>
+            <div>
+                <div class="text-xs font-label-md text-label-md uppercase tracking-wider text-on-surface-variant mb-1">
+                    Produk: <span id="result-product-title" class="font-bold text-primary">-</span>
+                </div>
+                <h1 id="result-status-tag"
+                    class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl text-primary">
+                    -</h1>
+                <p class="font-body-lg text-body-lg text-on-surface-variant mt-xs">Skor Keamanan Konsumen: <span id="result-verdict-score" class="font-bold">-</span></p>
+            </div>
+        </section>
+
+        <!-- 2 & 3. Executive Summary & Consumer Safety Score Checklist -->
+        <section class="max-w-4xl mx-auto w-full grid grid-cols-1 lg:grid-cols-3 gap-xl">
+            <div class="lg:col-span-2">
+                <h2
+                    class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-md">
+                    Ringkasan Eksekutif AI</h2>
+                <p id="result-ai-summary" class="font-body-lg text-body-lg text-on-surface leading-relaxed drop-cap">
+                    -
+                </p>
+            </div>
+            <div class="bg-surface-container p-lg rounded-2xl">
+                <h3 class="font-headline-md text-headline-md text-on-surface mb-sm">Faktor Skor Keamanan</h3>
+                <div id="result-score-reasons-list" class="space-y-sm">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Product Profile Table -->
+        <section class="border-t border-surface-container-highest pt-xl">
+            <h2
+                class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-lg">
+                Profil Produk Resmi BPOM</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-y-sm gap-x-xl">
+                <div class="flex flex-col border-b border-surface-variant py-sm">
+                    <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Nama Produk</span>
+                    <span id="prof-name" class="font-body-lg text-body-lg font-medium text-on-surface mt-1">-</span>
+                </div>
+                <div class="flex flex-col border-b border-surface-variant py-sm">
+                    <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Nomor Registrasi BPOM</span>
+                    <span id="prof-reg" class="font-body-lg text-body-lg text-on-surface mt-1">-</span>
+                </div>
+                <div class="flex flex-col border-b border-surface-variant py-sm">
+                    <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Produsen / Pendaftar</span>
+                    <span id="prof-mfr" class="font-body-md text-body-md text-on-surface mt-1">-</span>
+                </div>
+                <div class="flex flex-col border-b border-surface-variant py-sm">
+                    <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Kategori / Klasifikasi</span>
+                    <span id="prof-cat" class="font-body-md text-body-md text-on-surface mt-1">-</span>
+                </div>
+                <div class="flex flex-col border-b border-surface-variant py-sm">
+                    <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Bahan Aktif Utama</span>
+                    <span id="prof-ingredient" class="font-body-md text-body-md text-on-surface mt-1">-</span>
+                </div>
+                <div class="flex flex-col border-b border-surface-variant py-sm">
+                    <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Golongan Terapi</span>
+                    <span id="prof-golongan" class="font-body-md text-body-md text-on-surface mt-1">-</span>
+                </div>
+                <div class="flex flex-col border-b border-surface-variant py-sm col-span-1 md:col-span-2">
+                    <span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Kode ATC</span>
+                    <span id="prof-atc" class="font-body-md text-body-md text-on-surface mt-1">-</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5 & 6 & 7. BPOM Code, Functions & Administration -->
+        <section
+            class="bg-surface-container-low -mx-margin-mobile md:-mx-margin-desktop px-margin-mobile md:px-margin-desktop py-xl">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-lg max-w-[1440px] mx-auto">
+                <!-- BPOM Code -->
+                <div class="p-lg bg-surface rounded-xl shadow-sm border border-surface-variant">
+                    <div class="flex items-center space-x-xs mb-sm text-primary">
+                        <span class="material-symbols-outlined">verified</span>
+                        <h3 class="font-headline-md text-headline-md">Interpretasi Kode BPOM</h3>
+                    </div>
+                    <p id="prof-bpom-interpretation" class="font-body-md text-body-md text-on-surface">
+                        -
+                    </p>
+                </div>
+                <!-- Layman Function -->
+                <div class="p-lg bg-surface rounded-xl shadow-sm border border-surface-variant">
+                    <div class="flex items-center space-x-xs mb-sm text-tertiary">
+                        <span class="material-symbols-outlined">healing</span>
+                        <h3 class="font-headline-md text-headline-md font-bold text-tertiary">Fungsi &amp; Indikasi Utama</h3>
+                    </div>
+                    <div id="layman-cat" class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-2">-</div>
+                    <ul id="layman-indications-list" class="list-disc pl-5 font-body-md text-body-md text-on-surface space-y-1">
+                        <!-- Populated via JS -->
+                    </ul>
+                </div>
+                <!-- Administration Info -->
+                <div class="p-lg bg-surface rounded-xl shadow-sm border border-surface-variant">
+                    <div class="flex items-center space-x-xs mb-sm text-secondary">
+                        <span class="material-symbols-outlined">medication</span>
+                        <h3 class="font-headline-md text-headline-md font-bold text-secondary">Dosis &amp; Cara Penggunaan</h3>
+                    </div>
+                    <p class="font-body-md text-body-md text-on-surface mb-2">
+                        <strong>Cara Pakai:</strong> <span id="ddd-route-std">-</span>
+                    </p>
+                    <p class="font-body-md text-body-md text-on-surface mb-2">
+                        <strong>Dosis Harian (DDD):</strong> <span id="ddd-val">-</span> <span id="ddd-uom"></span>
+                    </p>
+                    <p class="font-body-md text-body-md text-on-surface mb-2">
+                        <strong>Media Penggunaan:</strong> <span id="ddd-media-penggunaan">-</span>
+                    </p>
+                    <p id="ddd-disclaimer" class="font-caption text-caption text-on-surface-variant italic mt-2">
+                        -
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Evidence -->
+        <section class="max-w-4xl mx-auto w-full">
+            <h2
+                class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-lg">
+                Bukti Analisis Klaim (Ekstraksi OCR)</h2>
+            <div id="result-evidence-container">
+                <!-- Quotes and sources populated via JS -->
+            </div>
+        </section>
+
+        <!-- 9. Potential Side Effects -->
+        <section class="border-t border-surface-container-highest pt-xl">
+            <h2
+                class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-lg">
+                Potensi Efek Samping (Data OpenFDA)</h2>
+            <div class="font-body-md text-body-md text-on-surface mb-sm">
+                Zat Aktif yang Dicari: <strong id="ae-ingredient-queried" class="text-primary font-bold">-</strong>
+            </div>
+            <div id="ae-reactions-list-container">
+                <ul id="ae-reactions-list" class="flex flex-wrap gap-sm">
+                    <!-- Populated side effects -->
+                </ul>
+            </div>
+            <p id="fda-disclaimer" class="font-caption text-caption text-on-surface-variant mt-xs">-</p>
+        </section>
+
+        <!-- 10. Recommendations & Tactical Guidance -->
+        <section class="bg-primary-container rounded-2xl p-xl text-center space-y-md mt-xl">
+            <h2 class="font-headline-md text-headline-md text-on-primary-container">Rekomendasi Ahli &amp; Panduan Konsumen</h2>
+            <p id="verdict-recommendation" class="font-body-lg text-body-lg text-on-primary-container max-w-2xl mx-auto">
+                -
+            </p>
+            <div class="bg-surface/50 rounded-xl p-md mt-sm max-w-2xl mx-auto text-left">
+                <h3 class="font-label-md text-label-md text-on-primary-container font-bold mb-2">Tips Penggunaan &amp; Keamanan:</h3>
+                <p id="overall-disclaimer" class="font-body-md text-body-md text-on-primary-container leading-relaxed">
+                    -
+                </p>
+            </div>
+            <button onclick="window.print()" class="mt-sm font-label-md text-label-md bg-primary text-on-primary px-8 py-3 rounded-full hover:opacity-90 transition-opacity">
+                Cetak Laporan Lengkap
+            </button>
+        </section>
+
+        <!-- 11. Technical Analysis Detail (Accordion) -->
+        <section class="mt-xl border border-surface-variant rounded-xl overflow-hidden">
+            <details class="group">
+                <summary
+                    class="flex justify-between items-center font-headline-md text-headline-md p-lg cursor-pointer bg-surface-container-low hover:bg-surface-container transition-colors">
+                    <span class="text-on-surface">Detail Analisis Teknis (Untuk Profesional)</span>
+                    <span
+                        class="material-symbols-outlined transition duration-300 group-open:-rotate-180">expand_more</span>
+                </summary>
+                <div
+                    class="p-lg bg-surface border-t border-surface-variant grid grid-cols-1 md:grid-cols-2 gap-lg text-sm">
+                    <div>
+                        <h4 class="font-label-md text-label-md text-on-surface-variant mb-1">Model Kepercayaan NLP (IndoBERT)</h4>
+                        <p class="font-body-md text-body-md text-on-surface mb-2">
+                            Status: <span id="result-model-label" class="font-bold">-</span>
+                        </p>
+                        <p class="font-body-md text-body-md text-on-surface mb-2">
+                            Confidence Score: <span id="result-model-confidence" class="font-bold">0%</span>
+                        </p>
+                        <div class="w-full bg-surface-container-highest rounded-full h-2 mb-4 overflow-hidden">
+                            <div id="result-model-confidence-bar" class="bg-primary h-full rounded-full" style="width: 0%"></div>
+                        </div>
+
+                        <h4 class="font-label-md text-label-md text-on-surface-variant mb-1">Trigger Words Terdeteksi</h4>
+                        <div id="explainable-ai-box" class="flex flex-wrap gap-2 mb-4">
+                            <span id="detected-trigger-words" class="bg-error-container text-on-error-container px-2 py-0.5 rounded text-xs">-</span>
+                        </div>
+
+                        <h4 class="font-label-md text-label-md text-on-surface-variant mb-1">Skor Konsistensi Medis</h4>
+                        <p class="font-body-md text-body-md text-on-surface mb-2">
+                            Skor: <span id="consistency-score-badge" class="font-bold">-</span>
+                        </p>
+                        <p id="consistency-explanation" class="font-body-md text-body-md text-on-surface mb-4">
+                            -
+                        </p>
+                        <div id="consistency-reasons-list" class="space-y-1 mb-4">
+                            <!-- Populated via JS -->
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-label-md text-label-md text-on-surface-variant mb-1">Raw OCR Text (Teks yang Dianalisis)</h4>
+                        <div id="result-ocr-text"
+                            class="bg-inverse-surface text-inverse-on-surface p-3 rounded font-mono text-xs h-40 overflow-y-auto whitespace-pre-wrap">
+                            -
+                        </div>
+                        
+                        <h4 class="font-label-md text-label-md text-on-surface-variant mt-4 mb-2">Breakdown Skor Keselamatan (Safety Score)</h4>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="bg-surface-container p-2 rounded flex flex-col justify-center">
+                                <span class="text-xs text-on-surface-variant">Validasi BPOM</span>
+                                <strong id="score-bpom" class="text-sm text-primary">0%</strong>
+                            </div>
+                            <div class="bg-surface-container p-2 rounded flex flex-col justify-center">
+                                <span class="text-xs text-on-surface-variant">Konsistensi Medis</span>
+                                <strong id="score-consistency" class="text-sm text-tertiary">0%</strong>
+                            </div>
+                            <div class="bg-surface-container p-2 rounded flex flex-col justify-center">
+                                <span class="text-xs text-on-surface-variant">Klaim IndoBERT</span>
+                                <strong id="score-nlp" class="text-sm text-primary">0%</strong>
+                            </div>
+                            <div class="bg-surface-container p-2 rounded flex flex-col justify-center">
+                                <span class="text-xs text-on-surface-variant">OpenFDA Safety</span>
+                                <strong id="score-fda" class="text-sm text-tertiary">0%</strong>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <h4 class="font-label-md text-label-md text-on-surface-variant mb-1">OpenFDA Laporan Kejadian</h4>
+                            <p class="font-body-md text-body-md text-on-surface">Total Laporan: <span id="ae-total-reports" class="font-bold">0</span></p>
+                            <p class="font-body-md text-body-md text-on-surface">Kejadian Serius: <span id="ae-serious-reports" class="font-bold">0</span></p>
+                        </div>
+                    </div>
+                </div>
+            </details>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface-container-low dark:bg-inverse-surface full-width relative flex flex-col md:flex-row justify-between items-start w-full px-margin-mobile md:px-margin-desktop py-xl max-w-[1440px] mx-auto space-y-md md:space-y-0 no-border">
+        <div class="w-full md:w-1/3">
+            <a class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed mb-4 inline-block" href="#">WARAS.ID</a>
+            <p class="font-caption text-caption text-on-surface-variant mt-2 max-w-sm">
+                © 2024 WARAS.ID. Medical safety verification platform. Information provided is for educational safety purposes and does not constitute medical advice.
+            </p>
+        </div>
+        <div class="w-full md:w-2/3 flex flex-wrap justify-start md:justify-end gap-x-8 gap-y-4">
+            <a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary underline decoration-primary/30 transition-all uppercase focus:ring-2 focus:ring-primary/20 focus:rounded-sm" href="#">Medical Advisory Board</a>
+            <a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary underline decoration-primary/30 transition-all uppercase focus:ring-2 focus:ring-primary/20 focus:rounded-sm" href="#">Methodology</a>
+            <a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary underline decoration-primary/30 transition-all uppercase focus:ring-2 focus:ring-primary/20 focus:rounded-sm" href="#">Privacy Protocol</a>
+            <a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary underline decoration-primary/30 transition-all uppercase focus:ring-2 focus:ring-primary/20 focus:rounded-sm" href="#">Data Integrity</a>
+            <a class="font-label-md text-label-md text-on-surface-variant dark:text-on-surface-variant hover:text-primary underline decoration-primary/30 transition-all uppercase focus:ring-2 focus:ring-primary/20 focus:rounded-sm" href="#">Contact Support</a>
+        </div>
+    </footer>
+
+    <script src="static/js/app.js"></script>
+</body>
+
+</html>
