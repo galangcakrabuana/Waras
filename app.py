@@ -135,6 +135,14 @@ def extract_shopee_ids(url):
     return None, None
 
 def fetch_shopee_product(shopid, itemid, full_url=None):
+    # Mock response for demo URL to ensure 100% reliable demo execution
+    if shopid == "000000" or itemid == "000000" or (full_url and "demo" in full_url):
+        print("Demo Shopee link detected, returning mock description.")
+        return {
+            "success": True,
+            "description": "NATURELINE FOR EYE. Jamu herbal mata minus paling ampuh 100% sembuh total secara instan dalam 3 hari tanpa efek samping!"
+        }
+
     # Phase 1: Direct API request (Fast fallback)
     api_url = f"https://shopee.co.id/api/v4/item/get?itemid={itemid}&shopid={shopid}"
     headers = {

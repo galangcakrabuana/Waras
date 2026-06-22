@@ -153,8 +153,7 @@ function initializeEventHandlers() {
 
   if (btnActionLink && mainInput) {
     btnActionLink.addEventListener('click', () => {
-      mainInput.placeholder = "Tempel link produk Shopee yang ingin diperiksa...";
-      mainInput.focus();
+      showDevelopmentPopup();
     });
   }
 
@@ -205,6 +204,43 @@ function initializeEventHandlers() {
       }
     });
   }
+
+  // Demo buttons
+  const demoBpomBtn = document.getElementById('demo-bpom');
+  const demoOverclaimBtn = document.getElementById('demo-overclaim');
+  const demoShopeeBtn = document.getElementById('demo-shopee');
+
+  if (demoBpomBtn) {
+    demoBpomBtn.addEventListener('click', () => runDemo('bpom'));
+  }
+  if (demoOverclaimBtn) {
+    demoOverclaimBtn.addEventListener('click', () => runDemo('overclaim'));
+  }
+  if (demoShopeeBtn) {
+    demoShopeeBtn.addEventListener('click', () => runDemo('shopee'));
+  }
+
+  // Tour guide triggers
+  const btnStartTour = document.getElementById('btn-start-tour');
+  const btnStartTourMobile = document.getElementById('btn-start-tour-mobile');
+  const btnStartResultTour = document.getElementById('btn-start-result-tour');
+
+  if (btnStartTour) {
+    btnStartTour.addEventListener('click', () => startTour('home'));
+  }
+  if (btnStartTourMobile) {
+    btnStartTourMobile.addEventListener('click', () => {
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu) {
+        mobileMenu.classList.remove('translate-x-0');
+        mobileMenu.classList.add('translate-x-full');
+      }
+      startTour('home');
+    });
+  }
+  if (btnStartResultTour) {
+    btnStartResultTour.addEventListener('click', () => startTour('result'));
+  }
 }
 
 // Handler for file selection
@@ -222,6 +258,9 @@ function handleFileSelect(method, file) {
 
 // Smart auto-detection for text input
 function analyzeMainInput() {
+  // If user triggers manually, reset the isDemoActive flag
+  window.isDemoActive = false;
+
   const mainInput = document.getElementById('input-main-val');
   if (!mainInput) return;
 
@@ -271,6 +310,10 @@ function analyzeMainInput() {
 
 // 1. Check Product Link (marketplace link)
 async function checkProductLink(urlVal) {
+  showDevelopmentPopup();
+}
+
+async function checkProductLinkDisabled(urlVal) {
   currentAnalysisMethod = 'link';
   showLoading('Sedang membaca informasi produk...');
 
@@ -819,7 +862,399 @@ function displayResults(result) {
   if (fdaScoreEl) fdaScoreEl.innerText = `${safety.adverse_event_score || 0}%`;
 
   showResults();
+
+  // If this analysis was triggered by the demo, automatically start the results page guide
+  if (window.isDemoActive) {
+    window.isDemoActive = false;
+    wasDemoTour = true;
+    setTimeout(() => {
+      startTour('result');
+    }, 400);
+  }
 }
+
+// Typewriter effect for demo buttons
+let typingTimeoutId = null;
+function typeWriter(text, inputEl, callback) {
+  if (typingTimeoutId) {
+    clearTimeout(typingTimeoutId);
+  }
+  inputEl.value = '';
+  
+  // Wait for page switch/repaint before scrolling and focusing
+  setTimeout(() => {
+    inputEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    inputEl.focus();
+  }, 150);
+
+  let i = 0;
+  function type() {
+    if (i < text.length) {
+      inputEl.value += text.charAt(i);
+      inputEl.focus();
+      
+      // Keep cursor at the end of the text
+      const pos = i + 1;
+      inputEl.setSelectionRange(pos, pos);
+      
+      // Scroll horizontally to keep the typed word in view
+      inputEl.scrollLeft = inputEl.scrollWidth;
+
+      i++;
+      typingTimeoutId = setTimeout(type, 40);
+    } else {
+      typingTimeoutId = null;
+      if (callback) callback();
+    }
+  }
+  
+  // Start typing after scroll is initiated
+  setTimeout(type, 200);
+}
+
+// Demo runner function
+function runDemo(type) {
+  const mainInput = document.getElementById('input-main-val');
+  if (!mainInput) return;
+
+  // Set isDemoActive to true so that results page tour triggers automatically
+  window.isDemoActive = true;
+
+  // Clear input and show home page first
+  if (typeof showHome === 'function') {
+    showHome();
+  }
+
+  let textVal = '';
+  let actionCallback = null;
+
+  if (type === 'bpom') {
+    textVal = 'SD161548601';
+    actionCallback = () => checkProductIdentity(textVal);
+  } else if (type === 'overclaim') {
+    textVal = 'Minyak herbal ajaib ini terbukti paling ampuh 100% sembuh total secara instan dari stroke dan diabetes tanpa efek samping!';
+    actionCallback = () => checkProductText(textVal);
+  } else if (type === 'shopee') {
+    showDevelopmentPopup();
+    return;
+  }
+
+  typeWriter(textVal, mainInput, actionCallback);
+}
+
+// Onboarding Tour logic
+let tourCurrentStep = 0;
+let tourSteps = [];
+let tourActivePage = '';
+let wasDemoTour = false;
+
+const homeTourSteps = [
+  {
+    targetId: 'input-main-val',
+    title: 'Kolom Pencarian Utama',
+    text: 'Ketik nama produk (misal: "Vitamin B"), nomor registrasi BPOM, atau teks iklan di sini untuk memulai verifikasi.'
+  },
+  {
+    targetId: 'btn-action-link',
+    title: 'Pindai Tautan Shopee',
+    text: 'Klik di sini untuk menempel link produk Shopee. AI akan secara otomatis memindai deskripsi produk dari platform e-commerce tersebut.'
+  },
+  {
+    targetId: 'btn-action-barcode',
+    title: 'Unggah Barcode atau Gambar',
+    text: 'Unggah foto barcode kemasan produk fisik atau screenshot promosi untuk memindai kode dan teks dengan OCR bertenaga AI.'
+  },
+  {
+    targetId: 'demo-bpom',
+    title: 'Preset Uji Coba Demo',
+    text: 'Klik tombol demo ini untuk langsung melihat kehebatan sistem dalam mendeteksi legalitas, klaim iklan, dan efek samping secara instan.'
+  }
+];
+
+const resultTourSteps = [
+  {
+    targetId: 'result-verdict-score',
+    title: 'Skor Keselamatan Konsumen',
+    text: 'Angka 0-100 ini dihitung secara proporsional berdasarkan registrasi BPOM, deteksi overclaim, konsistensi indikasi, dan data OpenFDA.'
+  },
+  {
+    targetId: 'result-ai-summary',
+    title: 'Ringkasan Eksekutif AI',
+    text: 'AI merangkum secara cerdas tingkat bahaya, legalitas, serta kecocokan klaim produk dengan fungsi terapinya.'
+  },
+  {
+    targetId: 'result-score-reasons-list',
+    title: 'Faktor Skor Keamanan',
+    text: 'Menampilkan poin-poin checklist detail yang memengaruhi skor keamanan (keabsahan BPOM, indikasi overclaim, atau kesesuaian kategori terapi).'
+  },
+  {
+    targetId: 'prof-bpom-interpretation',
+    title: 'Profil Resmi BPOM',
+    text: 'Menampilkan detail produsen dan interpretasi kode abreviasi BPOM secara transparan.'
+  },
+  {
+    targetId: 'ddd-route-std',
+    title: 'Dosis Standar WHO',
+    text: 'Menunjukkan standar takaran harian (Defined Daily Dose) dan rute pemakaian aman sesuai panduan resmi WHO.'
+  },
+  {
+    targetId: 'ae-reactions-list-container',
+    title: 'Potensi Efek Samping Global',
+    text: 'Daftar efek samping yang paling sering dilaporkan pasien di seluruh dunia berdasarkan database OpenFDA.'
+  }
+];
+
+function startTour(page) {
+  const tempWasDemo = wasDemoTour;
+  endTour();
+  wasDemoTour = tempWasDemo;
+
+  tourActivePage = page;
+  tourSteps = page === 'home' ? homeTourSteps : resultTourSteps;
+  tourCurrentStep = 0;
+
+  if (page === 'home') {
+    showHome();
+  } else {
+    const resultsPage = document.getElementById('results-page');
+    if (!resultsPage || !resultsPage.classList.contains('active')) {
+      alert('Jalankan analisis produk terlebih dahulu untuk melihat panduan hasil.');
+      return;
+    }
+  }
+
+  const overlay = document.createElement('div');
+  overlay.id = 'tour-overlay';
+  overlay.className = 'tour-overlay';
+  
+  const spotlight = document.createElement('div');
+  spotlight.id = 'tour-spotlight';
+  spotlight.className = 'tour-spotlight';
+  
+  const tooltip = document.createElement('div');
+  tooltip.id = 'tour-tooltip';
+  tooltip.className = 'tour-tooltip';
+  
+  overlay.appendChild(spotlight);
+  overlay.appendChild(tooltip);
+  document.body.appendChild(overlay);
+
+  // Attach event listeners for real-time positioning on scroll/resize
+  window.addEventListener('scroll', updateTourPosition, { passive: true });
+  window.addEventListener('resize', updateTourPosition, { passive: true });
+
+  renderTourStep();
+}
+
+function updateTourPosition() {
+  const overlay = document.getElementById('tour-overlay');
+  if (!overlay) return;
+
+  const step = tourSteps[tourCurrentStep];
+  const target = document.getElementById(step.targetId);
+  const spotlight = document.getElementById('tour-spotlight');
+  const tooltip = document.getElementById('tour-tooltip');
+
+  if (!target || !spotlight || !tooltip) return;
+
+  const rect = target.getBoundingClientRect();
+  const padding = 8;
+  spotlight.style.top = `${rect.top - padding}px`;
+  spotlight.style.left = `${rect.left - padding}px`;
+  spotlight.style.width = `${rect.width + padding * 2}px`;
+  spotlight.style.height = `${rect.height + padding * 2}px`;
+
+  const tooltipWidth = 340;
+  const tooltipPadding = 16;
+  let tooltipTop = rect.bottom + tooltipPadding;
+  let tooltipLeft = rect.left + (rect.width / 2) - (tooltipWidth / 2);
+
+  if (tooltipLeft < 10) tooltipLeft = 10;
+  if (tooltipLeft + tooltipWidth > window.innerWidth - 10) {
+    tooltipLeft = window.innerWidth - tooltipWidth - 10;
+  }
+
+  // If target is too low, place tooltip above it
+  if (rect.bottom + tooltipPadding + 220 > window.innerHeight) {
+    tooltipTop = rect.top - 230;
+  }
+
+  tooltip.style.top = `${tooltipTop}px`;
+  tooltip.style.left = `${tooltipLeft}px`;
+}
+
+function renderTourStep() {
+  const step = tourSteps[tourCurrentStep];
+  const target = document.getElementById(step.targetId);
+
+  if (!target) {
+    if (tourCurrentStep < tourSteps.length - 1) {
+      tourCurrentStep++;
+      renderTourStep();
+    } else {
+      endTour(false);
+    }
+    return;
+  }
+
+  // Auto focus / scroll instantly to center the target element
+  target.scrollIntoView({ behavior: 'auto', block: 'center' });
+
+  // Instantly position the spotlight and tooltip
+  updateTourPosition();
+
+  // Populate content in tooltip
+  const tooltip = document.getElementById('tour-tooltip');
+  if (tooltip) {
+    const isFirst = tourCurrentStep === 0;
+    const isLast = tourCurrentStep === tourSteps.length - 1;
+
+    tooltip.innerHTML = `
+      <div class="tour-tooltip-title">${step.title}</div>
+      <div class="tour-tooltip-body">${step.text}</div>
+      <div class="tour-tooltip-footer">
+        <span class="tour-counter">${tourCurrentStep + 1} dari ${tourSteps.length}</span>
+        <div class="tour-btn-group">
+          ${!isLast ? `<button class="tour-btn-skip" onclick="endTour(false)">Lewati</button>` : ''}
+          ${!isFirst ? `<button class="tour-btn-prev" onclick="prevTourStep()">Kembali</button>` : ''}
+          <button class="tour-btn-next" onclick="${isLast ? 'endTour(true)' : 'nextTourStep()'}">
+            ${isLast ? 'Selesai' : 'Lanjut'}
+          </button>
+        </div>
+      </div>
+    `;
+  }
+}
+
+function nextTourStep() {
+  if (tourCurrentStep < tourSteps.length - 1) {
+    tourCurrentStep++;
+    renderTourStep();
+  }
+}
+
+function prevTourStep() {
+  if (tourCurrentStep > 0) {
+    tourCurrentStep--;
+    renderTourStep();
+  }
+}
+
+function endTour(completed) {
+  // Remove event listeners
+  window.removeEventListener('scroll', updateTourPosition);
+  window.removeEventListener('resize', updateTourPosition);
+
+  const overlay = document.getElementById('tour-overlay');
+  if (overlay) {
+    overlay.remove();
+  }
+
+  // If this was a demo tour and they completed the last step, show the completion modal
+  if (wasDemoTour && completed) {
+    wasDemoTour = false;
+    setTimeout(() => {
+      showDemoCompletionModal();
+    }, 300);
+  } else {
+    wasDemoTour = false;
+  }
+}
+
+// Demo Completion Modal Helpers
+function showDemoCompletionModal() {
+  const existingModal = document.getElementById('demo-completion-modal');
+  if (existingModal) existingModal.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'demo-completion-modal';
+  modal.className = 'demo-modal-overlay';
+  
+  modal.innerHTML = `
+    <div class="demo-modal-card">
+      <svg class="demo-modal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#00696b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5.8 11.3 2 22l10.7-3.8M4 20l.5-.5M7 17l.5-.5M9 15l.5-.5M16 2a5 5 0 0 0-4 4v1h5a4 4 0 0 1 4 4v1a3 3 0 0 0 3-3V6a4 4 0 0 0-4-4Z"/>
+        <path d="M11.3 8.3c.2-.7.7-1.3 1.4-1.6M14 5.5c.8 0 1.5.3 2 .8M19 10.5c0 .8-.3 1.5-.8 2"/>
+      </svg>
+      <h3 class="demo-modal-title">Demo Selesai!</h3>
+      <p class="demo-modal-text">Anda telah melihat bagaimana Waras-ID menganalisis produk kesehatan. Apa yang ingin Anda lakukan selanjutnya?</p>
+      <div class="demo-modal-buttons">
+        <button class="demo-modal-btn-secondary" onclick="handleDemoAction('repeat')">Ulangi Demo</button>
+        <button class="demo-modal-btn-primary" onclick="handleDemoAction('start')">AYO MULAI SEKARANG</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  setTimeout(() => {
+    modal.classList.add('show');
+  }, 50);
+}
+
+function handleDemoAction(action) {
+  const modal = document.getElementById('demo-completion-modal');
+  if (modal) {
+    modal.classList.remove('show');
+    setTimeout(() => modal.remove(), 300);
+  }
+
+  if (action === 'repeat') {
+    runDemo('bpom');
+  } else if (action === 'start') {
+    showHome();
+    const mainInput = document.getElementById('input-main-val');
+    if (mainInput) {
+      mainInput.value = '';
+      mainInput.focus();
+    }
+  }
+}
+
+// Development Feature Pop-up Helpers
+function showDevelopmentPopup() {
+  const existingModal = document.getElementById('dev-feature-modal');
+  if (existingModal) existingModal.remove();
+
+  const modal = document.createElement('div');
+  modal.id = 'dev-feature-modal';
+  modal.className = 'demo-modal-overlay';
+  
+  modal.innerHTML = `
+    <div class="demo-modal-card">
+      <svg class="demo-modal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+      </svg>
+      <h3 class="demo-modal-title">Fitur Dalam Pengembangan</h3>
+      <p class="demo-modal-text">Mohon maaf, fitur pemindaian tautan e-commerce (Shopee) saat ini masih dalam proses pengembangan dan penyempurnaan.</p>
+      <div class="demo-modal-buttons">
+        <button class="demo-modal-btn-primary" onclick="closeDevPopup()" style="background: #d97706; border: none; color: white;">Mengerti</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+
+  setTimeout(() => {
+    modal.classList.add('show');
+  }, 50);
+}
+
+function closeDevPopup() {
+  const modal = document.getElementById('dev-feature-modal');
+  if (modal) {
+    modal.classList.remove('show');
+    setTimeout(() => modal.remove(), 300);
+  }
+}
+
+// Bind to window to allow HTML onclick access
+window.runDemo = runDemo;
+window.startTour = startTour;
+window.nextTourStep = nextTourStep;
+window.prevTourStep = prevTourStep;
+window.endTour = endTour;
+window.handleDemoAction = handleDemoAction;
+window.showDevelopmentPopup = showDevelopmentPopup;
+window.closeDevPopup = closeDevPopup;
 
 // Run on load
 if (document.readyState === 'loading') {

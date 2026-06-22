@@ -451,6 +451,275 @@
             font-family: 'Newsreader', serif;
             font-weight: 600;
         }
+
+        /* Demo strip styling */
+        .hero-demo-strip {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 24px;
+            width: 100%;
+        }
+
+        .hero-demo-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #3e4949;
+            opacity: 0.8;
+            letter-spacing: 0.02em;
+        }
+
+        .hero-demo-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .hero-demo-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #ffffff;
+            border: 1px solid rgba(110, 121, 121, 0.25);
+            color: #151d1d;
+            padding: 10px 18px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0, 105, 107, 0.03);
+        }
+
+        .hero-demo-btn:hover {
+            border-color: #00696b;
+            color: #00696b;
+            background: #ecf5f5;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 105, 107, 0.08);
+        }
+
+        .hero-demo-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Onboarding Tour styles */
+        .tour-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: transparent;
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .tour-spotlight {
+            position: fixed;
+            border: 2px solid #5abcbd;
+            box-shadow: 0 0 0 4px rgba(90, 188, 189, 0.25), 0 0 0 9999px rgba(6, 14, 14, 0.65);
+            border-radius: 12px;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            z-index: 10000;
+            pointer-events: none;
+        }
+
+        .tour-tooltip {
+            position: fixed;
+            background: #ffffff;
+            color: #151d1d;
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(90, 188, 189, 0.4);
+            z-index: 10001;
+            width: min(340px, 90vw);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            pointer-events: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* Demo Completion Modal Styles */
+        .demo-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(6, 14, 14, 0.75);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 11000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: auto;
+        }
+        .demo-modal-overlay.show {
+            opacity: 1;
+        }
+        .demo-modal-card {
+            background: #ffffff;
+            color: #151d1d;
+            padding: min(36px, 8vw);
+            border-radius: 28px;
+            width: 90%;
+            max-width: 440px;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(90, 188, 189, 0.35);
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-sizing: border-box;
+            word-wrap: break-word;
+            overflow: hidden;
+        }
+        .demo-modal-overlay.show .demo-modal-card {
+            transform: scale(1);
+        }
+        .demo-modal-icon {
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 18px auto;
+            display: block;
+        }
+        .demo-modal-title {
+            font-family: 'Newsreader', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: #151d1d;
+            margin-bottom: 12px;
+        }
+        .demo-modal-text {
+            font-size: 15px;
+            color: #4a5757;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+        .demo-modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .demo-modal-btn-primary {
+            background: #00696b;
+            color: #ffffff;
+            border: none;
+            border-radius: 9999px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            min-width: 140px;
+            box-sizing: border-box;
+        }
+        .demo-modal-btn-primary:hover {
+            background: #005354;
+            box-shadow: 0 6px 16px rgba(0, 105, 107, 0.3);
+            transform: translateY(-1px);
+        }
+        .demo-modal-btn-secondary {
+            background: #f0f5f5;
+            color: #00696b;
+            border: 1px solid rgba(0, 105, 107, 0.25);
+            border-radius: 9999px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+            min-width: 140px;
+            box-sizing: border-box;
+        }
+        .demo-modal-btn-secondary:hover {
+            background: #e1eded;
+            transform: translateY(-1px);
+        }
+
+        .tour-tooltip-title {
+            font-family: 'Newsreader', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #00696b;
+        }
+
+        .tour-tooltip-body {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #3e4949;
+        }
+
+        .tour-tooltip-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 8px;
+            padding-top: 12px;
+            border-top: 1px solid rgba(110, 121, 121, 0.1);
+        }
+
+        .tour-btn-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .tour-btn-prev, .tour-btn-next, .tour-btn-skip {
+            padding: 6px 14px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tour-btn-skip {
+            background: transparent;
+            border: none;
+            color: #3e4949;
+            opacity: 0.6;
+            padding: 6px 0;
+        }
+
+        .tour-btn-skip:hover {
+            opacity: 1;
+            color: #ba1a1a;
+        }
+
+        .tour-btn-prev {
+            background: #ecf5f5;
+            border: 1px solid rgba(110, 121, 121, 0.15);
+            color: #00696b;
+        }
+
+        .tour-btn-prev:hover {
+            background: #dbe4e4;
+        }
+
+        .tour-btn-next {
+            background: #00696b;
+            border: 1px solid #00696b;
+            color: #ffffff;
+        }
+
+        .tour-btn-next:hover {
+            background: #004f50;
+        }
+
+        .tour-counter {
+            font-size: 11px;
+            font-weight: 600;
+            color: #6e7979;
+            letter-spacing: 0.05em;
+        }
     </style>
 </head>
 
@@ -478,12 +747,16 @@
                 href="#what-we-check">Metodologi</a>
         </div>
         <div class="flex items-center space-x-md">
+            <button id="btn-start-tour" class="flex items-center space-x-1 text-primary hover:bg-primary/10 border border-primary/30 rounded-full px-4 py-1.5 text-xs font-semibold transition-colors">
+                <span class="material-symbols-outlined text-sm">explore</span>
+                <span>Mulai Panduan</span>
+            </button>
             <button id="btn-open-mobile-menu" class="md:hidden text-primary">
                 <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">menu</span>
             </button>
         </div>
     </nav>
-
+ 
     <!-- Mobile Navigation Drawer -->
     <div id="mobile-menu"
         class="fixed inset-0 bg-background/95 backdrop-blur-md z-45 transform translate-x-full transition-transform duration-300 md:hidden flex flex-col pt-24 px-8 space-y-6">
@@ -496,6 +769,10 @@
             href="#how-it-works">Cara Kerja</a>
         <a class="text-on-surface-variant hover:text-primary text-xl uppercase tracking-wider border-b border-outline-variant/20 pb-2"
             href="#what-we-check">Metodologi</a>
+        <button id="btn-start-tour-mobile" class="w-full mt-4 flex items-center justify-center space-x-2 text-primary bg-primary/5 hover:bg-primary/10 border border-primary/25 rounded-full py-3 text-sm font-semibold transition-colors">
+            <span class="material-symbols-outlined text-sm">explore</span>
+            <span>Mulai Panduan</span>
+        </button>
     </div>
 
     <!-- Main Content (Home / Input Page) -->
@@ -528,6 +805,25 @@
                                 mengidentifikasi keaslian produk, serta mendeteksi klaim promosi yang berlebihan secara cepat
                                 dan transparan.
                             </p>
+
+                            <!-- Demo Quick-Start Buttons -->
+                            <div class="hero-demo-strip" aria-label="Coba demo langsung">
+                                <span class="hero-demo-label">Coba contoh langsung:</span>
+                                <div class="hero-demo-buttons">
+                                    <button id="demo-bpom" class="hero-demo-btn" data-demo="bpom">
+                                        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 0; font-size:16px;">verified</span>
+                                        Cek BPOM: Vitamin B
+                                    </button>
+                                    <button id="demo-overclaim" class="hero-demo-btn" data-demo="overclaim">
+                                        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 0; font-size:16px;">policy</span>
+                                        Deteksi Overclaim
+                                    </button>
+                                    <button id="demo-shopee" class="hero-demo-btn" data-demo="shopee">
+                                        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 0; font-size:16px;">link</span>
+                                        Link Shopee Demo
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -733,13 +1029,18 @@
     <main
         class="page flex-grow flex flex-col w-full px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto py-8 md:py-16 space-y-8 md:space-y-16"
         id="results-page">
-        <!-- Back Button -->
-        <div class="flex justify-start">
+        <!-- Back Button & Guide Button -->
+        <div class="flex justify-between items-center w-full">
             <button
                 class="flex items-center text-primary dark:text-primary-fixed hover:text-primary/80 transition-colors font-label-md text-label-md uppercase tracking-wider focus:outline-none"
                 data-view="home">
                 <span class="material-symbols-outlined mr-2">arrow_back</span>
                 Kembali ke pilihan input
+            </button>
+            <button id="btn-start-result-tour"
+                class="flex items-center space-x-1 text-primary hover:bg-primary/10 border border-primary/30 rounded-full px-4 py-1.5 text-xs font-semibold transition-colors focus:outline-none">
+                <span class="material-symbols-outlined text-sm">explore</span>
+                <span>Panduan Hasil</span>
             </button>
         </div>
 
