@@ -241,6 +241,16 @@ function initializeEventHandlers() {
   if (btnStartResultTour) {
     btnStartResultTour.addEventListener('click', () => startTour('result'));
   }
+
+  // Auto-start panduan interaktif saat pertama kali user mengakses website di sesi baru
+  const hasSeenTour = sessionStorage.getItem('hasSeenOnboardingTour');
+  if (!hasSeenTour) {
+    setTimeout(() => {
+      startTour('home');
+      // Tandai agar tidak muncul terus-menerus di halaman refresh tab yang sama
+      sessionStorage.setItem('hasSeenOnboardingTour', 'true');
+    }, 1000); // Jeda 1 detik agar transisi loading awal halaman selesai dengan mulus
+  }
 }
 
 // Handler for file selection
@@ -952,7 +962,7 @@ const homeTourSteps = [
   {
     targetId: 'input-main-val',
     title: 'Kolom Pencarian Utama',
-    text: 'Ketik nama produk (misal: "Vitamin B"), nomor registrasi BPOM, atau teks iklan di sini untuk memulai verifikasi.'
+    text: 'Ketik nama produk (misal: "Vitamin B"), nomor registrasi BPOM, atau salin teks iklan promosi yang ingin dicek di sini (misal: "Diapet menyembuhkan kanker").'
   },
   {
     targetId: 'btn-action-link',
@@ -996,6 +1006,11 @@ const resultTourSteps = [
     targetId: 'ddd-route-std',
     title: 'Dosis Standar WHO',
     text: 'Menunjukkan standar takaran harian (Defined Daily Dose) dan rute pemakaian aman sesuai panduan resmi WHO.'
+  },
+  {
+    targetId: 'result-evidence-container',
+    title: 'Deteksi & Bukti Overclaim',
+    text: 'Bagian ini memaparkan kutipan kalimat promosi yang dideteksi oleh AI sebagai klaim berlebihan (overclaim), lengkap dengan analisis kebenaran medisnya.'
   },
   {
     targetId: 'ae-reactions-list-container',
