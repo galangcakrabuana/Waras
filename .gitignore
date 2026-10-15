@@ -200,3 +200,21 @@ shopee_stealth_fetcher.py
 cek.html
 rujukaninput.html
 shopee_page.html
+
+# Local coursework, exports, and office files
+.~lock.*
+*.pdf
+*.pptx
+*.docx
+*.ipynb
+*.zip
+NLP kelas KAKAP
+dataset.csv
+dataset_fixed(1).csv
+hasil_normalisasi*.csv
+medical_lexicon_conservative.csv
+remaining_20_percent_typo_robustness_long.csv
+shopee_products_cleaned.csv
+train_80_percent_typo_all_levels.csv
+mockup-revisi.html
+tests/

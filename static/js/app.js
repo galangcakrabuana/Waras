@@ -220,6 +220,18 @@ function initializeEventHandlers() {
     demoShopeeBtn.addEventListener('click', () => runDemo('shopee'));
   }
 
+  // Hero primary CTA anchor to search zone
+  const heroAnalyzeBtn = document.getElementById('btn-hero-analyze');
+  if (heroAnalyzeBtn) {
+    heroAnalyzeBtn.addEventListener('click', () => {
+      const mainInput = document.getElementById('input-main-val');
+      if (mainInput) {
+        mainInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => mainInput.focus(), 300);
+      }
+    });
+  }
+
   // Tour guide triggers
   const btnStartTour = document.getElementById('btn-start-tour');
   const btnStartTourMobile = document.getElementById('btn-start-tour-mobile');
@@ -774,7 +786,7 @@ function displayResults(result) {
 
   const overallDiscEl = document.getElementById('overall-disclaimer');
   if (overallDiscEl) {
-    overallDiscEl.innerText = result.disclaimer || "WARAS-ID adalah platform analisis keselamatan konsumen bertenaga AI. Seluruh analisis bersifat informatif dan tidak menggantikan nasihat medis profesional.";
+    overallDiscEl.innerText = result.disclaimer || "WARAS-ID adalah platform analisis keselamatan konsumen. Seluruh analisis bersifat informatif dan tidak menggantikan nasihat medis profesional.";
   }
 
   // Technical Details (Accordion fields)
@@ -972,7 +984,7 @@ const homeTourSteps = [
   {
     targetId: 'btn-action-barcode',
     title: 'Unggah Barcode atau Gambar',
-    text: 'Unggah foto barcode kemasan produk fisik atau screenshot promosi untuk memindai kode dan teks dengan OCR bertenaga AI.'
+    text: 'Unggah foto barcode kemasan produk fisik atau screenshot promosi untuk memindai kode dan teks dengan OCR .'
   },
   {
     targetId: 'demo-bpom',
